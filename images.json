@@ -1,0 +1,82 @@
+{
+  "_comment": "Centrální konfigurace všech obrázků webu. Změňte cesty zde a aktualizují se všude.",
+  "_documentation": "Pro detaily viz images/README.txt",
+
+  "hero": {
+    "_comment": "Hlavní úvodní fotky (slider). Přidejte/odeberte podle potřeby.",
+    "slides": [
+      {
+        "image": "images/hero/hero-1-dratene.jpg",
+        "title": "Drátěné ploty",
+        "subtitle": "Kvalitní pletivové oplocení"
+      },
+      {
+        "image": "images/hero/hero-2-dratene.jpg",
+        "title": "Dřevěné ploty",
+        "subtitle": "Tradiční řemeslná práce"
+      },
+      {
+        "image": "images/hero/hero-3-ploty.jpg",
+        "title": "Profesionální oplocení",
+        "subtitle": "Pro Vaše bezpečí a soukromí"
+      },
+      {
+        "image": "images/hero/hero-4-stavba.jpg",
+        "title": "Stavba na klíč",
+        "subtitle": "Od poradenství po realizaci"
+      }
+    ]
+  },
+
+  "categories": {
+    "_comment": "Obrázky kategorií - 1 obrázek na kategorii. Cesta od kořene webu.",
+    "dratene": {
+      "image": "images/categories/cat-pletivove.jpg",
+      "fallbackColor": "#475569"
+    },
+    "betonove": {
+      "image": "images/categories/cat-betonove.jpg",
+      "fallbackColor": "#64748b"
+    },
+    "drevene": {
+      "image": "images/products/E7.jpg",
+      "fallbackColor": "#92400e"
+    },
+    "mobilni": {
+      "image": "images/products/mobilni-oploceni-big.jpg",
+      "fallbackColor": "#1e40af"
+    },
+    "brany": {
+      "image": "images/products/branka-FAB4.jpg",
+      "fallbackColor": "#1e293b"
+    },
+    "prislusenstvi": {
+      "image": "images/products/sloupek-zn-1.jpg",
+      "fallbackColor": "#854d0e"
+    }
+  },
+
+  "gallery": {
+    "_comment": "Fotky realizací. Přidejte další jako další objekty do pole.",
+    "items": [
+      { "image": "images/hero/hero-1-dratene.jpg", "title": "Drátěný plot - rodinný dům" },
+      { "image": "images/hero/hero-2-drevene.jpg", "title": "Dřevěný plot rustikální" },
+      { "image": "images/hero/hero-3-ploty.jpg", "title": "Komplexní oplocení" },
+      { "image": "images/hero/hero-4-stavba.jpg", "title": "Stavba plotu na klíč" },
+      { "image": "images/products/prod-plot1.jpg", "title": "Realizace pletivového plotu" },
+      { "image": "images/products/prod-plot2.jpg", "title": "Detail montáže" },
+      { "image": "images/categories/cat-betonove.jpg", "title": "Betonový plot" },
+      { "image": "images/categories/cat-pletivove.jpg", "title": "Pletivové oplocení" }
+    ]
+  },
+
+  "about": {
+    "_comment": "Obrázky pro sekci O nás",
+    "map": "images/about/about-mapa.jpg",
+    "shop": ""
+  },
+
+  "logo": {
+    "main": "logo.png"
+  }
+}

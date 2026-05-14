@@ -1,0 +1,106 @@
+================================================================
+  PLOTYS WEB — RYCHLÝ NÁVOD KAM DÁT JAKÝ OBRÁZEK
+================================================================
+
+╔══════════════════════════════════════════════════════════════╗
+║  PRINCIP: Vše se řídí ze 2 souborů:                         ║
+║   • images.json    → konfigurace obrázků webu (slider, ...)  ║
+║   • database.json  → produkty s odkazem na obrázek           ║
+║                                                                ║
+║  Pokud obrázek chybí, web zobrazí gradient + ikonu (vždy fungu║je)
+╚══════════════════════════════════════════════════════════════╝
+
+────────────────────────────────────────────────────────────────
+ 1) HLAVNÍ ÚVODNÍ FOTKY (Hero slider na úvodu)
+────────────────────────────────────────────────────────────────
+   📁 KAM:  images/hero/
+   📐 Velikost:  1920×1080px (širokoúhlé)
+   📏 Formát:    JPG, max 500KB
+   📋 Soubory:
+       hero-1-dratene.jpg
+       hero-2-drevene.jpg
+       hero-3-ploty.jpg
+       hero-4-stavba.jpg
+   ✏ Změna v: images.json → "hero" → "slides"
+
+────────────────────────────────────────────────────────────────
+ 2) OBRÁZKY KATEGORIÍ (na hlavní stránce)
+────────────────────────────────────────────────────────────────
+   📁 KAM:  images/categories/
+   📐 Velikost:  800×1000px (na výšku)
+   📏 Formát:    JPG, max 300KB
+   📋 Soubory (6 kategorií):
+       cat-pletivove.jpg     (drátěné ploty)
+       cat-betonove.jpg      (betonové ploty)
+       cat-drevene.jpg       (dřevěné ploty)
+       cat-mobilni.jpg       (mobilní oplocení)
+       cat-brany.jpg         (brány a branky)
+       cat-prislusenstvi.jpg (příslušenství)
+   ✏ Změna v: images.json → "categories"
+
+────────────────────────────────────────────────────────────────
+ 3) FOTKY PRODUKTŮ (v e-shopu)
+────────────────────────────────────────────────────────────────
+   📁 KAM:  images/products/
+   📐 Velikost:  600×600px (čtverec)
+   📏 Formát:    JPG, max 200KB
+   📋 Pojmenování:  prod-NAZEV.jpg
+       Příklad: prod-pletivo-150.jpg, prod-brana-vjezdova.jpg
+
+   ✏ JAK PŘIDAT/ZMĚNIT u konkrétního produktu:
+   1) Vložte fotku do images/products/
+   2) Otevřete database.json
+   3) Najděte produkt (podle id nebo názvu)
+   4) Upravte pole "image":
+      "image": "images/products/prod-pletivo-150.jpg"
+   5) Uložte. Hotovo.
+
+   Pokud necháte "image": "" (prázdné), zobrazí se ikonka.
+
+────────────────────────────────────────────────────────────────
+ 4) GALERIE REALIZACÍ
+────────────────────────────────────────────────────────────────
+   📁 KAM:  images/gallery/
+   📐 Velikost:  1200×800px (na šířku)
+   📏 Formát:    JPG, max 400KB
+   📋 Pojmenování:  gallery-NAZEV.jpg
+       Příklad: gallery-rodinny-dum-1.jpg
+
+   ✏ Změna v: images.json → "gallery" → "items"
+
+────────────────────────────────────────────────────────────────
+ 5) LOGO
+────────────────────────────────────────────────────────────────
+   📁 KAM:  ./logo.png  (přímo v hlavní složce plotys/)
+   📐 Velikost:  256×256px (čtverec)
+   📏 Formát:    PNG s průhledným pozadím
+   ⚠ Ponechte název "logo.png" — použito ve všech stránkách
+
+────────────────────────────────────────────────────────────────
+ PRAVIDLA POJMENOVÁNÍ SOUBORŮ:
+────────────────────────────────────────────────────────────────
+  ✓ ANO:   plot-pletivovy-150.jpg
+           prod-objimka-zelena.jpg
+           hero-zima-2026.jpg
+  ✗ NE:    Plot pletivový 150.jpg   (mezery, diakritika)
+           IMG_4567.jpg               (nečitelný název)
+
+  Pravidla:
+   - Pouze malá písmena
+   - Bez mezer (použijte pomlčku)
+   - Bez diakritiky (žádné á, é, ž, ...)
+   - Pouze ASCII znaky
+
+────────────────────────────────────────────────────────────────
+ RYCHLÝ POSTUP - PŘIDAT FOTKU NOVÉHO PRODUKTU:
+────────────────────────────────────────────────────────────────
+ 1. Vyfotit/Stáhnout fotku produktu
+ 2. Zmenšit na 600×600px (např. v https://squoosh.app)
+ 3. Pojmenovat "prod-NAZEV.jpg"
+ 4. Přesunout do plotys/images/products/
+ 5. Otevřít plotys/database.json
+ 6. Najít produkt nebo přidat nový
+ 7. Vyplnit "image": "images/products/prod-NAZEV.jpg"
+ 8. Uložit, obnovit web (F5)
+
+================================================================

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="E-shop Plotys - Ploty Opava. Online nákup plotů a oplocení.">
+<title>E-shop | Plotys - Ploty Opava</title>
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body class="page-eshop">
+
+<!-- STATUS BANNER -->
+<div id="statusBanner" class="status-banner">
+  <div class="container status-content">
+    <span class="status-icon">●</span>
+    <span id="statusText"></span>
+    <button class="status-close" onclick="closeStatus()" aria-label="Zavřít">×</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="header-inner">
+    <a href="plotys.html" class="logo">
+      <img src="logo.png" alt="Plotys logo" class="logo-img">
+      <span class="logo-text">
+        <strong>Plotys</strong>
+        <small>Ploty Opava</small>
+      </span>
+    </a>
+    <nav id="nav">
+      <ul>
+        <li><a href="plotys.html">Domů</a></li>
+        <li><a href="plotys.html#about">O nás</a></li>
+        <li><a href="plotys.html#products">Produkty</a></li>
+        <li><a href="plotys.html#gallery">Galerie</a></li>
+        <li><a href="plotys.html#contact">Kontakt</a></li>
+        <li><a href="eshop.html" class="nav-cta active">E-shop</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <button class="cart-btn" onclick="toggleCart()" aria-label="Košík">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2l1.5 4.5h12L21 2M6 2H3M6 2l3 14h11l1.5-9H7.5"/>
+          <circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/>
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ESHOP HEADER -->
+<section class="eshop-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="plotys.html">Domů</a> <span>/</span> <strong>E-shop</strong>
+    </div>
+    <h1>E-shop Plotys</h1>
+    <p>Široký sortiment plotů a příslušenství. Rozvoz zdarma po Opavě a okolí.</p>
+    <div class="categories-grid" id="eshopCategoriesGrid" style="margin-top: 40px;"></div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section class="section eshop-section">
+  <div class="container">
+    <div class="shop-toolbar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="searchInput" placeholder="Hledat produkt..." oninput="searchProducts(this.value)">
+      </div>
+      <div class="sort-box">
+        <label>Řadit:</label>
+        <select id="sortSelect" onchange="sortProducts(this.value)">
+          <option value="default">Výchozí</option>
+          <option value="price-asc">Cena vzestupně</option>
+          <option value="price-desc">Cena sestupně</option>
+          <option value="name">Podle názvu</option>
+        </select>
+      </div>
+    </div>
+    <div class="shop-filters" id="shopFilters">
+      <button class="filter-btn active" data-cat="all" onclick="filterProducts('all')">Vše <span class="cnt"></span></button>
+      <button class="filter-btn" data-cat="dratene" onclick="filterProducts('dratene')">Drátěné</button>
+      <button class="filter-btn" data-cat="betonove" onclick="filterProducts('betonove')">Betonové</button>
+      <button class="filter-btn" data-cat="drevene" onclick="filterProducts('drevene')">Dřevěné</button>
+      <button class="filter-btn" data-cat="mobilni" onclick="filterProducts('mobilni')">Mobilní</button>
+      <button class="filter-btn" data-cat="brany" onclick="filterProducts('brany')">Brány</button>
+      <button class="filter-btn" data-cat="prislusenstvi" onclick="filterProducts('prislusenstvi')">Příslušenství</button>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+    <div id="noResults" class="no-results" style="display:none;">
+      <p style="font-size:60px;">🔍</p>
+      <h3>Žádné produkty nenalezeny</h3>
+      <p>Zkuste jiný filtr nebo hledaný výraz.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-icon">🚚</div>
+        <h3>Rozvoz zdarma</h3>
+        <p>Po Opavě a do 30 km zdarma. Mimo region 250 Kč.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">💳</div>
+        <h3>Způsoby platby</h3>
+        <p>Dobírka, bankovní převod, hotově při převzetí.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📞</div>
+        <h3>Potřebujete poradit?</h3>
+        <p>Zavolejte nám na +420 732 287 136.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">↩</div>
+        <h3>Vrácení zboží</h3>
+        <p>Možnost vrácení do 14 dnů od převzetí.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <div class="logo logo-footer">
+        <img src="logo.png" alt="Plotys" class="logo-img">
+        <span class="logo-text">
+          <strong>Plotys</strong>
+          <small>Ploty Opava</small>
+        </span>
+      </div>
+      <p>Profesionální ploty a oplocení v Opavě a okolí.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigace</h4>
+      <ul>
+        <li><a href="plotys.html">Domů</a></li>
+        <li><a href="plotys.html#products">Produkty</a></li>
+        <li><a href="eshop.html">E-shop</a></li>
+        <li><a href="plotys.html#contact">Kontakt</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <ul>
+        <li>Otická 36, Opava</li>
+        <li>+420 732 287 136</li>
+        <li>postavplot@gmail.com</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Správa</h4>
+      <ul>
+        <li><a href="orders.html">Admin objednávek</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom container">
+    <p>&copy; 2026 Plotys - Ploty Opava. Všechna práva vyhrazena.</p>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<aside class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>Váš košík</h3>
+    <button onclick="toggleCart()" aria-label="Zavřít">×</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Celkem:</span>
+      <strong id="cartTotal">0 Kč</strong>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="checkout()">Přejít k objednávce</button>
+  </div>
+</aside>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal" id="checkoutModal">
+  <div class="modal-content modal-wide">
+    <button class="modal-close" onclick="closeCheckout()">×</button>
+    <h2>Dokončení objednávky</h2>
+    <form id="checkoutForm" onsubmit="finalizeOrder(event)">
+      <h3 class="form-section-title">Kontaktní údaje</h3>
+      <div class="form-row">
+        <input type="text" name="firstName" placeholder="Jméno *" required>
+        <input type="text" name="lastName" placeholder="Příjmení *" required>
+      </div>
+      <div class="form-row">
+        <input type="tel" name="phone" placeholder="Telefon *" required>
+        <input type="email" name="email" placeholder="E-mail *" required>
+      </div>
+
+      <h3 class="form-section-title">Adresa doručení</h3>
+      <input type="text" name="street" placeholder="Ulice a číslo popisné *" required>
+      <div class="form-row">
+        <input type="text" name="city" placeholder="Město *" required>
+        <input type="text" name="zip" placeholder="PSČ *" required pattern="[0-9 ]{3,6}">
+      </div>
+
+      <h3 class="form-section-title">Způsob platby</h3>
+      <div class="payment-methods">
+        <label><input type="radio" name="payment" value="Dobírka" checked> 💵 Dobírka <small>(+30 Kč)</small></label>
+        <label><input type="radio" name="payment" value="Bankovní převod"> 🏦 Bankovní převod</label>
+        <label><input type="radio" name="payment" value="Hotově při převzetí"> 💰 Hotově při převzetí</label>
+      </div>
+
+      <h3 class="form-section-title">Poznámka</h3>
+      <textarea name="note" placeholder="Poznámka k objednávce (nepovinné)" rows="3"></textarea>
+
+      <h3 class="form-section-title">Souhrn objednávky</h3>
+      <div class="checkout-summary" id="checkoutSummary"></div>
+
+      <label class="checkbox-label">
+        <input type="checkbox" required>
+        Souhlasím s <a href="#" style="color:var(--accent);">obchodními podmínkami</a> a zpracováním osobních údajů.
+      </label>
+
+      <button type="submit" class="btn btn-primary btn-full btn-lg">
+        ✓ Závazně objednat
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ORDER SUCCESS MODAL -->
+<div class="modal" id="successModal">
+  <div class="modal-content">
+    <div class="success-content">
+      <div class="success-icon">✓</div>
+      <h2>Objednávka odeslána!</h2>
+      <p>Děkujeme za Vaši objednávku <strong id="orderNumber"></strong>.</p>
+      <p>Brzy Vás budeme kontaktovat na uvedeném telefonu nebo e-mailu.</p>
+      <p class="success-note">Notifikace byla odeslána na e-mail obchodu.</p>
+      <a href="plotys.html" class="btn btn-primary">Zpět na hlavní stránku</a>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initHeader();
+    loadStatus();
+    initEshop();
+  });
+</script>
+</body>
+</html>

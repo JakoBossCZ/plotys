@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administrace objednávek | Plotys</title>
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body class="page-admin">
+
+<!-- LOGIN OVERLAY -->
+<div id="authOverlay" class="auth-overlay">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <img src="logo.png" alt="Plotys logo">
+    </div>
+    <div id="authLockMessage" class="auth-lock" style="display:none;"></div>
+
+    <div id="loginView">
+      <h1>Přihlášení do administrace</h1>
+      <p class="auth-subtitle">Tato stránka je chráněna heslem.</p>
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="auth-input-wrap">
+          <input type="password" id="loginPassword" placeholder="Heslo administrátora" required autocomplete="current-password">
+          <button type="button" class="toggle-password" onclick="togglePassword('loginPassword',this)" aria-label="Zobrazit heslo">👁</button>
+        </div>
+        <div id="loginError" class="auth-error" style="display:none;"></div>
+        <button type="submit" class="btn btn-primary btn-full btn-lg">🔓 Přihlásit se</button>
+      </form>
+      <p class="auth-hint">Heslo zapomenuto? <a href="#" onclick="resetPassword(event)">Resetovat (smaže všechna data)</a></p>
+    </div>
+
+    <div id="setupView" style="display:none;">
+      <h1>Nastavení administrace</h1>
+      <p class="auth-subtitle">Toto je první spuštění. Vytvořte si heslo pro přístup k objednávkám.</p>
+      <form id="setupForm" onsubmit="handleSetup(event)">
+        <div class="auth-input-wrap">
+          <input type="password" id="newPassword" placeholder="Nové heslo (min. 8 znaků)" required minlength="8" autocomplete="new-password">
+          <button type="button" class="toggle-password" onclick="togglePassword('newPassword',this)">👁</button>
+        </div>
+        <div class="auth-input-wrap">
+          <input type="password" id="confirmPassword" placeholder="Potvrzení hesla" required minlength="8" autocomplete="new-password">
+          <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword',this)">👁</button>
+        </div>
+        <div class="password-strength" id="passwordStrength"></div>
+        <div id="setupError" class="auth-error" style="display:none;"></div>
+        <button type="submit" class="btn btn-primary btn-full btn-lg">🔐 Vytvořit heslo</button>
+      </form>
+      <div class="auth-tips">
+        <strong>💡 Doporučení pro silné heslo:</strong>
+        <ul>
+          <li>Minimálně 12 znaků</li>
+          <li>Velká i malá písmena, čísla, speciální znaky</li>
+          <li>Nepoužívejte jméno, datum narození, "heslo123"</li>
+          <li>Heslo si bezpečně uložte - nelze ho obnovit</li>
+        </ul>
+      </div>
+    </div>
+
+    <a href="plotys.html" class="auth-back">← Zpět na hlavní stránku</a>
+  </div>
+</div>
+
+<header id="header" class="scrolled" style="display:none;">
+  <div class="header-inner">
+    <a href="plotys.html" class="logo">
+      <img src="logo.png" alt="Plotys logo" class="logo-img">
+      <span class="logo-text">
+        <strong>Plotys</strong>
+        <small>Administrace</small>
+      </span>
+    </a>
+    <nav id="nav">
+      <ul>
+        <li><a href="plotys.html">Hlavní stránka</a></li>
+        <li><a href="eshop.html">E-shop</a></li>
+        <li><a href="orders.html" class="nav-cta active">Objednávky</a></li>
+        <li><a href="#" onclick="logout(event)" class="logout-link">🔒 Odhlásit</a></li>
+      </ul>
+    </nav>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section class="admin-page" id="adminPage" style="display:none;">
+  <div class="container">
+    <div class="admin-header">
+      <div>
+        <span class="section-tag">Administrace</span>
+        <h1>Přehled objednávek</h1>
+        <p>Všechny objednávky uložené v databázi obchodu.</p>
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-primary" onclick="exportToExcel()">
+          📊 Stáhnout Excel
+        </button>
+        <button class="btn btn-outline" onclick="exportToCSV()">
+          📄 Stáhnout CSV
+        </button>
+        <button class="btn btn-outline btn-danger" onclick="clearOrders()">
+          🗑 Smazat vše
+        </button>
+      </div>
+    </div>
+
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div class="stat-label">Celkem objednávek</div>
+        <div class="stat-value" id="totalOrders">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Celkový obrat</div>
+        <div class="stat-value" id="totalRevenue">0 Kč</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Dnešní objednávky</div>
+        <div class="stat-value" id="todayOrders">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Průměrná objednávka</div>
+        <div class="stat-value" id="avgOrder">0 Kč</div>
+      </div>
+    </div>
+
+    <div class="admin-grid">
+      <div class="admin-config">
+        <h3>⚙ Notifikační e-mail</h3>
+        <p style="margin-bottom:12px;">E-mail kam mají chodit notifikace o nových objednávkách:</p>
+        <div class="form-row">
+          <input type="email" id="notifyEmail" placeholder="vasemail@gmail.com">
+          <button class="btn btn-primary" onclick="saveNotifyEmail()">Uložit</button>
+        </div>
+        <p style="margin-top:12px;font-size:13px;color:var(--gray-500);">
+          💡 Notifikace přes FormSubmit.co - zdarma. První objednávka vyžaduje potvrzení e-mailu.
+        </p>
+      </div>
+
+      <div class="admin-config">
+        <h3>🔐 Bezpečnost</h3>
+        <p style="margin-bottom:12px;font-size:14px;">Nastavení účtu administrátora:</p>
+        <button class="btn btn-outline btn-sm" onclick="openChangePassword()">Změnit heslo</button>
+        <button class="btn btn-outline btn-sm btn-danger" onclick="logout()">Odhlásit se</button>
+        <p style="margin-top:14px;font-size:12px;color:var(--gray-500);line-height:1.6;">
+          ✓ Data zašifrována (AES-GCM)<br>
+          ✓ Heslo hashováno (SHA-256 + sůl)<br>
+          ✓ Auto-odhlášení po <span id="sessionTimeLeft">2 hod</span> neaktivity<br>
+          ✓ Zámek po 5 chybných pokusech
+        </p>
+      </div>
+    </div>
+
+    <div class="security-notice">
+      <strong>⚠ Důležité upozornění o bezpečnosti:</strong>
+      <p>Tento systém ochrání Vaše data před náhodnými návštěvníky webu, ale data jsou uložena v prohlížeči.
+      Pro vyšší bezpečnost při ostrém provozu doporučujeme nasadit web s backendem (např. přes Vercel + databáze).
+      <strong>Nikdy nesdílejte heslo a používejte HTTPS hosting</strong> (Netlify, Vercel - automaticky).</p>
+    </div>
+
+    <div class="orders-table-wrap">
+      <table class="orders-table" id="ordersTable">
+        <thead>
+          <tr>
+            <th>Č. obj.</th>
+            <th>Datum</th>
+            <th>Zákazník</th>
+            <th>Kontakt</th>
+            <th>Adresa</th>
+            <th>Položky</th>
+            <th>Platba</th>
+            <th>Celkem</th>
+            <th>Akce</th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+      <div id="ordersMobile" class="orders-mobile"></div>
+      <div id="noOrders" class="no-orders" style="display:none;">
+        <p style="font-size:80px;">📦</p>
+        <h3>Zatím žádné objednávky</h3>
+        <p>Objednávky se zde zobrazí poté, co je zákazníci odešlou v e-shopu.</p>
+        <a href="eshop.html" class="btn btn-primary">Otevřít E-shop</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER DETAIL MODAL -->
+<div class="modal" id="detailModal">
+  <div class="modal-content modal-wide">
+    <button class="modal-close" onclick="closeDetail()">×</button>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal" id="changePasswordModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeChangePassword()">×</button>
+    <h2>Změna hesla</h2>
+    <form onsubmit="handleChangePassword(event)">
+      <input type="password" id="oldPassword" placeholder="Současné heslo" required>
+      <input type="password" id="newPasswordChange" placeholder="Nové heslo (min. 8 znaků)" required minlength="8">
+      <input type="password" id="confirmNewPassword" placeholder="Potvrzení nového hesla" required minlength="8">
+      <div id="changePasswordError" class="auth-error" style="display:none;"></div>
+      <button type="submit" class="btn btn-primary btn-full">Uložit nové heslo</button>
+    </form>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initAuth();
+  });
+</script>
+</body>
+</html>
