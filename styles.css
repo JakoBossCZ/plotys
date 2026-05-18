@@ -91,12 +91,12 @@ h3{font-size:clamp(1.4rem,2vw,1.8rem)}
   font-size:13px;
   font-weight:500;
   position:fixed;
-  top:0;left:0;right:0;
-  z-index:1001;
-  transition:transform 0.4s var(--ease);
+  top:80px;
+  left:0;right:0;
+  z-index:999;
   letter-spacing:0.3px;
 }
-.status-banner.hidden{transform:translateY(-100%)}
+.status-banner.hidden{display:none}
 .status-banner.warning{background:var(--warning)}
 .status-banner.closed{background:var(--danger)}
 .status-banner.info{background:var(--info)}
@@ -109,22 +109,20 @@ h3{font-size:clamp(1.4rem,2vw,1.8rem)}
 /* ===== HEADER ===== */
 header{
   position:fixed;
-  top:38px;
+  top:0;
   left:0;right:0;
   background:rgba(255,255,255,0.85);
   backdrop-filter:blur(20px) saturate(180%);
   -webkit-backdrop-filter:blur(20px) saturate(180%);
-  z-index:1000;
-  transition:background 0.4s var(--ease),border-color 0.4s var(--ease),box-shadow 0.4s var(--ease),top 0.3s var(--ease);
+  z-index:1001;
+  transition:background 0.4s var(--ease),border-color 0.4s var(--ease),box-shadow 0.4s var(--ease);
   border-bottom:1px solid transparent;
 }
 header.scrolled{
   border-bottom-color:var(--gray-200);
-  top:0;
   background:rgba(255,255,255,0.95);
   box-shadow:var(--shadow-sm);
 }
-header.no-banner{top:0}
 
 /* Plynulý přechod prvků v hlavičce */
 header .logo-img,
@@ -156,7 +154,7 @@ body:not(.page-home) header .logo-img{filter:brightness(0) !important}
 .page-home header:not(.scrolled) nav a{color:#fff !important}
 .page-home header:not(.scrolled) nav a:hover{color:#fff !important;opacity:0.85}
 .page-home header:not(.scrolled) nav a::after{background:#fff !important}
-.page-home header:not(.scrolled) nav a.nav-cta{background:var(--accent) !important;color:#fff !important}
+.page-home header:not(.scrolled) nav a.nav-cta{background:var(--accent) !important;color: var(--white) !important}
 .page-home header:not(.scrolled) nav a.nav-cta:hover{background:var(--accent-dark) !important}
 .page-home header:not(.scrolled) .cart-btn{
   background:rgba(255,255,255,0.15) !important;
@@ -211,14 +209,14 @@ nav a:hover{color:var(--accent)}
 nav a:hover::after{transform:scaleX(1)}
 nav a.nav-cta{
   background:var(--accent);
-  color:#fff;
+  color:var(--white);
   padding:10px 22px;
   border-radius:50px;
   margin-left:8px;
 }
-nav a.nav-cta:hover{background:var(--accent);color:#fff}
+nav a.nav-cta:hover{background:var(--accent-dark);color:#fff}
 nav a.nav-cta::after{display:none}
-nav a.active{color:var(--accent)}
+nav a.active{color:var(--white)}
 
 .header-actions{display:flex;align-items:center;gap:12px}
 .cart-btn{
@@ -1510,6 +1508,36 @@ nav a.nav-inquiry::after{display:none}
   color:var(--accent-dark);
   background:var(--accent-pale);
 }
+
+/* ===== SETTINGS NAV LINK ===== */
+nav a.nav-settings-link{
+  color:var(--gray-600) !important;
+}
+nav a.nav-settings-link:hover{color:var(--accent) !important}
+
+/* ===== TOGGLE SWITCH ===== */
+.banner-toggle-row{display:flex;align-items:center;gap:12px}
+.toggle-switch{position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{
+  position:absolute;inset:0;
+  background:var(--gray-300);
+  border-radius:24px;
+  cursor:pointer;
+  transition:background 0.25s var(--ease);
+}
+.toggle-slider::before{
+  content:'';
+  position:absolute;
+  left:3px;top:3px;
+  width:18px;height:18px;
+  background:#fff;
+  border-radius:50%;
+  transition:transform 0.25s var(--ease);
+  box-shadow:0 1px 4px rgba(0,0,0,0.2);
+}
+.toggle-switch input:checked + .toggle-slider{background:var(--accent)}
+.toggle-switch input:checked + .toggle-slider::before{transform:translateX(20px)}
 
 @media (max-width:480px){
   .container{padding:0 16px}

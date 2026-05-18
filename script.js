@@ -205,6 +205,9 @@ function showToast(message, type = '') {
 }
 
 // ===== HEADER & MENU =====
+window.addEventListener('resize', positionBanner);
+window.addEventListener('load', positionBanner);
+
 function initHeader() {
   window.addEventListener('scroll', () => {
     const header = document.getElementById('header');
@@ -580,24 +583,32 @@ const STATUS_PRESETS = {
   closed: { type:'closed', text:'✕ Dnes máme zavřeno' }
 };
 
+function positionBanner() {
+  const banner = document.getElementById('statusBanner');
+  const header = document.getElementById('header');
+  if (banner && header && banner.style.display !== 'none') {
+    banner.style.top = header.offsetHeight + 'px';
+  }
+}
+
 function loadStatus() {
   const saved = JSON.parse(localStorage.getItem('plotys_status') || 'null');
   const banner = document.getElementById('statusBanner');
   const text = document.getElementById('statusText');
-  const header = document.getElementById('header');
   if (!banner) return;
   if (!saved || saved.type === 'hidden') {
-    banner.classList.add('hidden');
-    if (header) header.classList.add('no-banner');
+    banner.style.display = 'none';
     return;
   }
   banner.className = 'status-banner ' + (saved.type === 'open' ? '' : saved.type);
+  banner.style.display = '';
   if (text) text.textContent = saved.text;
+  requestAnimationFrame(positionBanner);
 }
 
 function closeStatus() {
-  document.getElementById('statusBanner')?.classList.add('hidden');
-  document.getElementById('header')?.classList.add('no-banner');
+  const banner = document.getElementById('statusBanner');
+  if (banner) banner.style.display = 'none';
 }
 
 function openAdminPanel() {
@@ -904,6 +915,7 @@ function showAdmin() {
   document.getElementById('adminPage').style.display = 'block';
   renderOrdersAdmin();
   loadNotifyEmail();
+  if (typeof loadBannerAdmin === 'function') loadBannerAdmin();
   startActivityMonitor();
 }
 

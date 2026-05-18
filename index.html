@@ -19,15 +19,6 @@
 </head>
 <body class="page-home">
 
-<!-- ============ STATUS BANNER (lze upravit přes Admin panel) ============ -->
-<div id="statusBanner" class="status-banner">
-  <div class="container status-content">
-    <span class="status-icon">●</span>
-    <span id="statusText">Načítání...</span>
-    <button class="status-close" onclick="closeStatus()" aria-label="Zavřít">×</button>
-  </div>
-</div>
-
 <!-- ============ HEADER ============ -->
 <header id="header">
   <div class="header-inner">
@@ -64,6 +55,15 @@
     </div>
   </div>
 </header>
+
+<!-- ============ STATUS BANNER (lze upravit přes Admin panel) ============ -->
+<div id="statusBanner" class="status-banner" style="display:none;">
+  <div class="container status-content">
+    <span class="status-icon">●</span>
+    <span id="statusText"></span>
+    <button class="status-close" onclick="closeStatus()" aria-label="Zavřít">×</button>
+  </div>
+</div>
 
 <!-- ============ HERO (slider s fotkami) ============
      IMAGE: hero obrázky se načítají z images.json → hero.slides
@@ -242,7 +242,6 @@
       </div>
       <form class="contact-form" onsubmit="submitContactForm(event)">
         <h3>Napište nám</h3>
-        <p>Odpovídáme obvykle do několika hodin.</p>
         <div class="form-row">
           <input type="text" name="name" placeholder="Vaše jméno" required>
           <input type="email" name="email" placeholder="E-mail" required>
@@ -263,7 +262,7 @@
   <div class="container footer-inner">
     <div class="footer-col">
       <div class="logo logo-footer">
-        <img src="logo.png" alt="Plotys" class="logo-img">
+        <img src="images/logo_tab.png" alt="Plotys" class="logo-img">
         <span class="logo-text">
           <strong>Plotys</strong>
           <small>Ploty Opava</small>
@@ -286,13 +285,12 @@
         <li>Otická 36, Opava</li>
         <li>+420 732 287 136</li>
         <li>postavplot@gmail.com</li>
-        <li>Po-Pá 8-16, So 8-12</li>
+        <li>Po-Pá 8-16, So-Ne zavřeno</li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Správa</h4>
       <ul>
-        <li><a href="#" onclick="openAdminPanel();return false;">Status panel</a></li>
         <li><a href="orders.html">Admin objednávek</a></li>
       </ul>
     </div>
@@ -334,34 +332,6 @@
   </div>
 </div>
 
-<!-- ============ ADMIN STATUS MODAL ============ -->
-<div class="modal" id="adminModal">
-  <div class="modal-content">
-    <button class="modal-close" onclick="closeAdminPanel()">×</button>
-    <h2>Nastavení statusu</h2>
-    <p>Aktualizujte status zobrazený zákazníkům.</p>
-    <div class="admin-form">
-      <label>Typ statusu</label>
-      <select id="statusType">
-        <option value="open">✓ Otevřeno (zelená)</option>
-        <option value="info">ℹ Informace (modrá)</option>
-        <option value="warning">⚠ Upozornění (oranžová)</option>
-        <option value="closed">✕ Zavřeno (červená)</option>
-        <option value="hidden">Skrýt status</option>
-      </select>
-      <label>Text statusu</label>
-      <textarea id="statusMessage" rows="3" placeholder="Např. Dovolená 26.6. - 15.7."></textarea>
-      <div class="admin-presets">
-        <strong>Rychlé předvolby:</strong>
-        <button onclick="setPreset('open')">Otevřeno</button>
-        <button onclick="setPreset('holiday')">Dovolená</button>
-        <button onclick="setPreset('busy')">Velký zájem</button>
-        <button onclick="setPreset('closed')">Zavřeno</button>
-      </div>
-      <button class="btn btn-primary btn-full" onclick="saveStatus()">Uložit změny</button>
-    </div>
-  </div>
-</div>
 
 <div id="toast" class="toast"></div>
 

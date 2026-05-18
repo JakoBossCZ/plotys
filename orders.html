@@ -78,6 +78,7 @@
         <li><a href="index.html">Hlavní stránka</a></li>
         <li><a href="eshop.html">E-shop</a></li>
         <li><a href="orders.html" class="nav-cta active">Objednávky</a></li>
+        <li><a href="#" onclick="openSettings(event)" class="nav-settings-link">⚙ Nastavení</a></li>
         <li><a href="#" onclick="logout(event)" class="logout-link">🔒 Odhlásit</a></li>
       </ul>
     </nav>
@@ -125,40 +126,6 @@
         <div class="stat-label">Průměrná objednávka</div>
         <div class="stat-value" id="avgOrder">0 Kč</div>
       </div>
-    </div>
-
-    <div class="admin-grid">
-      <div class="admin-config">
-        <h3>⚙ Notifikační e-mail</h3>
-        <p style="margin-bottom:12px;">E-mail kam mají chodit notifikace o nových objednávkách:</p>
-        <div class="form-row">
-          <input type="email" id="notifyEmail" placeholder="vasemail@gmail.com">
-          <button class="btn btn-primary" onclick="saveNotifyEmail()">Uložit</button>
-        </div>
-        <p style="margin-top:12px;font-size:13px;color:var(--gray-500);">
-          💡 Notifikace přes FormSubmit.co - zdarma. První objednávka vyžaduje potvrzení e-mailu.
-        </p>
-      </div>
-
-      <div class="admin-config">
-        <h3>🔐 Bezpečnost</h3>
-        <p style="margin-bottom:12px;font-size:14px;">Nastavení účtu administrátora:</p>
-        <button class="btn btn-outline btn-sm" onclick="openChangePassword()">Změnit heslo</button>
-        <button class="btn btn-outline btn-sm btn-danger" onclick="logout()">Odhlásit se</button>
-        <p style="margin-top:14px;font-size:12px;color:var(--gray-500);line-height:1.6;">
-          ✓ Data zašifrována (AES-GCM)<br>
-          ✓ Heslo hashováno (SHA-256 + sůl)<br>
-          ✓ Auto-odhlášení po <span id="sessionTimeLeft">2 hod</span> neaktivity<br>
-          ✓ Zámek po 5 chybných pokusech
-        </p>
-      </div>
-    </div>
-
-    <div class="security-notice">
-      <strong>⚠ Důležité upozornění o bezpečnosti:</strong>
-      <p>Tento systém ochrání Vaše data před náhodnými návštěvníky webu, ale data jsou uložena v prohlížeči.
-      Pro vyšší bezpečnost při ostrém provozu doporučujeme nasadit web s backendem (např. přes Vercel + databáze).
-      <strong>Nikdy nesdílejte heslo a používejte HTTPS hosting</strong> (Netlify, Vercel - automaticky).</p>
     </div>
 
     <div class="orders-table-wrap">
@@ -212,11 +179,136 @@
   </div>
 </div>
 
+<!-- SETTINGS MODAL -->
+<div class="modal" id="settingsModal">
+  <div class="modal-content modal-wide">
+    <button class="modal-close" onclick="closeSettings()">×</button>
+    <h2>⚙ Nastavení</h2>
+    <p>Konfigurace administrace a webu.</p>
+
+    <div class="admin-grid" style="margin-bottom:24px;">
+      <div class="admin-config">
+        <h3>⚙ Notifikační e-mail</h3>
+        <p style="margin-bottom:12px;">E-mail kam mají chodit notifikace o nových objednávkách:</p>
+        <div class="form-row">
+          <input type="email" id="notifyEmail" placeholder="vasemail@gmail.com">
+          <button class="btn btn-primary" onclick="saveNotifyEmail()">Uložit</button>
+        </div>
+        <p style="margin-top:12px;font-size:13px;color:var(--gray-500);">
+          💡 Notifikace přes FormSubmit.co - zdarma. První objednávka vyžaduje potvrzení e-mailu.
+        </p>
+      </div>
+
+      <div class="admin-config">
+        <h3>🔐 Bezpečnost</h3>
+        <p style="margin-bottom:12px;font-size:14px;">Nastavení účtu administrátora:</p>
+        <button class="btn btn-outline btn-sm" onclick="openChangePassword()">Změnit heslo</button>
+        <button class="btn btn-outline btn-sm btn-danger" onclick="logout()">Odhlásit se</button>
+        <p style="margin-top:14px;font-size:12px;color:var(--gray-500);line-height:1.6;">
+          ✓ Data zašifrována (AES-GCM)<br>
+          ✓ Heslo hashováno (SHA-256 + sůl)<br>
+          ✓ Auto-odhlášení po <span id="sessionTimeLeft">2 hod</span> neaktivity<br>
+          ✓ Zámek po 5 chybných pokusech
+        </p>
+      </div>
+    </div>
+
+    <div class="admin-config" style="margin-bottom:24px;">
+      <h3>📢 Notifikační banner webu</h3>
+      <p style="margin-bottom:16px;font-size:14px;">Banner zobrazený zákazníkům na hlavní stránce a e-shopu. Změny se projeví ihned po uložení.</p>
+      <div class="admin-form">
+        <label>Viditelnost banneru</label>
+        <div class="banner-toggle-row">
+          <label class="toggle-switch">
+            <input type="checkbox" id="adminBannerEnabled" onchange="onBannerToggle(this)">
+            <span class="toggle-slider"></span>
+          </label>
+          <span id="bannerToggleLabel" style="font-size:14px;color:var(--gray-600);">Banner je skrytý</span>
+        </div>
+        <label>Rychlé předvolby</label>
+        <div class="admin-presets">
+          <button type="button" onclick="setBannerPreset('closed')">Dnes máme zavřeno</button>
+          <button type="button" onclick="setBannerPreset('holiday')">Dovolená</button>
+          <button type="button" onclick="setBannerPreset('busy')">Velký zájem</button>
+          <button type="button" onclick="setBannerPreset('open')">Otevřeno</button>
+        </div>
+        <label>Typ banneru</label>
+        <select id="adminStatusType">
+          <option value="open">✓ Otevřeno (zelená)</option>
+          <option value="info">ℹ Informace (modrá)</option>
+          <option value="warning">⚠ Upozornění (oranžová)</option>
+          <option value="closed">✕ Zavřeno (červená)</option>
+        </select>
+        <label>Text banneru</label>
+        <textarea id="adminStatusMessage" rows="2" placeholder="Vlastní text banneru... (např. Dnes máme zavřeno)"></textarea>
+        <button class="btn btn-primary" onclick="saveBannerAdmin()">💾 Uložit banner</button>
+      </div>
+    </div>
+
+    <div class="security-notice">
+      <strong>⚠ Důležité upozornění o bezpečnosti:</strong>
+      <p>Tento systém ochrání Vaše data před náhodnými návštěvníky webu, ale data jsou uložena v prohlížeči.
+      Pro vyšší bezpečnost při ostrém provozu doporučujeme nasadit web s backendem (např. přes Vercel + databáze).
+      <strong>Nikdy nesdílejte heslo a používejte HTTPS hosting</strong> (Netlify, Vercel - automaticky).</p>
+    </div>
+  </div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script src="data.js"></script>
 <script src="script.js"></script>
 <script>
+  const BANNER_PRESETS = {
+    open:    { type: 'open',    text: '✓ Máme otevřeno - Po-Pá 8:00-16:00, So 8:00-12:00' },
+    holiday: { type: 'closed',  text: '✕ Dovolená - obchod zavřen. Objednávky vyřídíme po návratu.' },
+    busy:    { type: 'warning', text: '⚠ Zvýšený zájem - dodací doba se může prodloužit o 2-3 dny' },
+    closed:  { type: 'closed',  text: '✕ Dnes máme zavřeno' }
+  };
+
+  function loadBannerAdmin() {
+    const saved = JSON.parse(localStorage.getItem('plotys_status') || 'null') || { type: 'hidden', text: '' };
+    const enabled = saved.type !== 'hidden';
+    const toggle = document.getElementById('adminBannerEnabled');
+    const label = document.getElementById('bannerToggleLabel');
+    if (toggle) toggle.checked = enabled;
+    if (label) label.textContent = enabled ? 'Banner je aktivní' : 'Banner je skrytý';
+    document.getElementById('adminStatusType').value = enabled ? saved.type : 'open';
+    document.getElementById('adminStatusMessage').value = saved.text;
+  }
+
+  function onBannerToggle(checkbox) {
+    const label = document.getElementById('bannerToggleLabel');
+    if (label) label.textContent = checkbox.checked ? 'Banner je aktivní' : 'Banner je skrytý';
+  }
+
+  function setBannerPreset(key) {
+    const p = BANNER_PRESETS[key];
+    const toggle = document.getElementById('adminBannerEnabled');
+    const label = document.getElementById('bannerToggleLabel');
+    if (toggle) { toggle.checked = true; }
+    if (label) label.textContent = 'Banner je aktivní';
+    document.getElementById('adminStatusType').value = p.type;
+    document.getElementById('adminStatusMessage').value = p.text;
+  }
+
+  function saveBannerAdmin() {
+    const enabled = document.getElementById('adminBannerEnabled').checked;
+    const type = enabled ? document.getElementById('adminStatusType').value : 'hidden';
+    const text = enabled ? document.getElementById('adminStatusMessage').value.trim() : '';
+    localStorage.setItem('plotys_status', JSON.stringify({ type, text }));
+    showToast('✓ Banner byl aktualizován', 'success');
+  }
+
+  function openSettings(e) {
+    if (e) e.preventDefault();
+    document.getElementById('settingsModal').classList.add('active');
+  }
+
+  function closeSettings() {
+    document.getElementById('settingsModal')?.classList.remove('active');
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     initAuth();
   });
