@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="E-shop Plotys - Ploty Opava. Online nákup plotů a oplocení.">
 <title>E-shop | Plotys - Ploty Opava</title>
-<link rel="icon" href="logo.png">
+<link rel="icon" href="images/logo_tab.png">
 <link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +14,6 @@
 </head>
 <body class="page-eshop">
 
-<!-- HEADER -->
 <header id="header">
   <div class="header-inner">
     <a href="index.html" class="logo">
@@ -49,7 +48,6 @@
   </div>
 </header>
 
-<!-- STATUS BANNER -->
 <div id="statusBanner" class="status-banner" style="display:none;">
   <div class="container status-content">
     <span class="status-icon">●</span>
@@ -58,19 +56,17 @@
   </div>
 </div>
 
-<!-- ESHOP HEADER -->
 <section class="eshop-hero">
   <div class="container">
     <div class="breadcrumb">
       <a href="index.html">Domů</a> <span>/</span> <strong>E-shop</strong>
     </div>
-    <h1>E-shop Plotys</h1>
-    <p>Široký sortiment plotů a příslušenství. Rozvoz zdarma po Opavě a okolí.</p>
+    <h1>E-shop</h1>
+    <p>Vše pro váš plot na jednom místě. Po Opavě a okolí rozvážíme zdarma.</p>
     <div class="categories-grid" id="eshopCategoriesGrid" style="margin-top: 40px;"></div>
   </div>
 </section>
 
-<!-- SHOP -->
 <section class="section eshop-section">
   <div class="container">
     <div class="shop-toolbar">
@@ -82,9 +78,9 @@
         <label>Řadit:</label>
         <select id="sortSelect" onchange="sortProducts(this.value)">
           <option value="default">Výchozí</option>
-          <option value="price-asc">Cena vzestupně</option>
-          <option value="price-desc">Cena sestupně</option>
-          <option value="name">Podle názvu</option>
+          <option value="price-asc">Od nejlevnějšího</option>
+          <option value="price-desc">Od nejdražšího</option>
+          <option value="name">Podle abecedy</option>
         </select>
       </div>
     </div>
@@ -100,41 +96,39 @@
     <div class="products-grid" id="productsGrid"></div>
     <div id="noResults" class="no-results" style="display:none;">
       <p style="font-size:60px;">🔍</p>
-      <h3>Žádné produkty nenalezeny</h3>
-      <p>Zkuste jiný filtr nebo hledaný výraz.</p>
+      <h3>Nic jsme nenašli</h3>
+      <p>Zkuste hledat jinak nebo vyberte jinou kategorii.</p>
     </div>
   </div>
 </section>
 
-<!-- INFO -->
 <section class="section section-alt">
   <div class="container">
     <div class="info-grid">
       <div class="info-card">
         <div class="info-icon">🚚</div>
         <h3>Rozvoz zdarma</h3>
-        <p>Po Opavě a do 30 km zdarma. Mimo region 250 Kč.</p>
+        <p>Po Opavě a okolí (do 30 km) vozíme zdarma. Dál jen za 250 Kč.</p>
       </div>
       <div class="info-card">
         <div class="info-icon">💳</div>
-        <h3>Způsoby platby</h3>
-        <p>Dobírka, bankovní převod, hotově při převzetí.</p>
+        <h3>Možnosti platby</h3>
+        <p>Převodem, na dobírku, nebo hotově našemu řidiči.</p>
       </div>
       <div class="info-card">
         <div class="info-icon">📞</div>
         <h3>Potřebujete poradit?</h3>
-        <p>Zavolejte nám na +420 732 287 136.</p>
+        <p>Zavolejte na +420 732 287 136. Rádi pomůžeme s výběrem.</p>
       </div>
       <div class="info-card">
         <div class="info-icon">↩</div>
-        <h3>Vrácení zboží</h3>
-        <p>Možnost vrácení do 14 dnů od převzetí.</p>
+        <h3>Snadné vrácení</h3>
+        <p>Nepoužité zboží můžete do 14 dnů bez obav vrátit.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="container footer-inner">
     <div class="footer-col">
@@ -145,7 +139,7 @@
           <small>Ploty Opava</small>
         </span>
       </div>
-      <p>Profesionální ploty a oplocení v Opavě a okolí.</p>
+      <p>Poctivé ploty pro dům i zahradu. Vaše rodinná firma z Opavy.</p>
     </div>
     <div class="footer-col">
       <h4>Navigace</h4>
@@ -177,7 +171,6 @@
   </div>
 </footer>
 
-<!-- CART SIDEBAR -->
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 <aside class="cart-sidebar" id="cartSidebar">
   <div class="cart-header">
@@ -194,7 +187,6 @@
   </div>
 </aside>
 
-<!-- CHECKOUT MODAL -->
 <div class="modal" id="checkoutModal">
   <div class="modal-content modal-wide">
     <button class="modal-close" onclick="closeCheckout()">×</button>
@@ -210,7 +202,7 @@
         <input type="email" name="email" placeholder="E-mail *" required>
       </div>
 
-      <h3 class="form-section-title">Adresa doručení</h3>
+      <h3 class="form-section-title">Doručovací adresa</h3>
       <input type="text" name="street" placeholder="Ulice a číslo popisné *" required>
       <div class="form-row">
         <input type="text" name="city" placeholder="Město *" required>
@@ -225,7 +217,7 @@
       </div>
 
       <h3 class="form-section-title">Poznámka</h3>
-      <textarea name="note" placeholder="Poznámka k objednávce (nepovinné)" rows="3"></textarea>
+      <textarea name="note" placeholder="Poznámka k objednávce nebo adrese..." rows="3"></textarea>
 
       <h3 class="form-section-title">Souhrn objednávky</h3>
       <div class="checkout-summary" id="checkoutSummary"></div>
@@ -242,15 +234,14 @@
   </div>
 </div>
 
-<!-- ORDER SUCCESS MODAL -->
 <div class="modal" id="successModal">
   <div class="modal-content">
     <div class="success-content">
       <div class="success-icon">✓</div>
-      <h2>Objednávka odeslána!</h2>
-      <p>Děkujeme za Vaši objednávku <strong id="orderNumber"></strong>.</p>
-      <p>Brzy Vás budeme kontaktovat na uvedeném telefonu nebo e-mailu.</p>
-      <p class="success-note">Notifikace byla odeslána na e-mail obchodu.</p>
+      <h2>Objednávka přijata!</h2>
+      <p>Děkujeme za nákup. Vaše číslo objednávky je <strong id="orderNumber"></strong>.</p>
+      <p>Brzy se ozveme a domluvíme detaily doručení.</p>
+      <p class="success-note">Potvrzení jsme odeslali na e-mail.</p>
       <a href="index.html" class="btn btn-primary">Zpět na hlavní stránku</a>
     </div>
   </div>

@@ -4,14 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Plotys - Ploty Opava. Drátěné, betonové, dřevěné a mobilní ploty. E-shop s rozvozem zdarma po Opavě.">
-<title>Plotys — Profesionální ploty a oplocení v Opavě</title>
+<title>Plotys Opava</title>
 
-<!-- ============================================================
-     OBRÁZKY: Veškerá konfigurace obrázků je v souboru images.json
-     Návod pro přidávání: viz images/README.txt
-     ============================================================ -->
-
-<link rel="icon" href="logo.png">
+<link rel="icon" href="images/logo_tab.png">
 <link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,11 +14,9 @@
 </head>
 <body class="page-home">
 
-<!-- ============ HEADER ============ -->
 <header id="header">
   <div class="header-inner">
     <a href="plotys.html" class="logo">
-      <!-- IMAGE: hlavní logo, nahraďte v souboru logo.png -->
       <img src="images\logo_tab.png" alt="Plotys logo" class="logo-img">
       <span class="logo-text">
         <strong>Plotys</strong>
@@ -56,7 +49,6 @@
   </div>
 </header>
 
-<!-- ============ STATUS BANNER (lze upravit přes Admin panel) ============ -->
 <div id="statusBanner" class="status-banner" style="display:none;">
   <div class="container status-content">
     <span class="status-icon">●</span>
@@ -65,10 +57,6 @@
   </div>
 </div>
 
-<!-- ============ HERO (slider s fotkami) ============
-     IMAGE: hero obrázky se načítají z images.json → hero.slides
-     Pro přidání: vložte obrázek do images/hero/ a přidejte do images.json
-============================================================ -->
 <section id="home" class="hero">
   <div id="heroSlides"></div>
   <div class="container hero-content">
@@ -76,7 +64,7 @@
       <span class="hero-line">Ploty stavíme</span>
       <span class="hero-line italic">s pečlivostí.</span>
     </h1>
-    <p class="hero-subtitle">Drátěné, betonové, dřevěné a mobilní ploty přímo z Opavy. Kvalitní materiál, odborná montáž, rozvoz zdarma.</p>
+    <p class="hero-subtitle">Kompletní řešení pro váš plot. Dodáme materiál a zajistíme stavbu na klíč.</p>
     <div class="hero-buttons">
       <a href="eshop.html" class="btn btn-primary">
         Vstoupit do E-shopu
@@ -104,110 +92,99 @@
   </div>
 </section>
 
-<!-- ============ ABOUT / FEATURES ============ -->
 <section id="about" class="section">
   <div class="container">
     <div class="section-header">
       <div class="eyebrow">O nás</div>
-      <h2>Co děláme jinak</h2>
-      <p>Specializujeme se na ploty více než 20 let. Náš tým vám vždy poradí s výběrem nejvhodnějšího řešení pro váš pozemek.</p>
+      <h2>Proč vybrat nás?</h2>
+      <p>Plotům rozumíme. Rádi k vám přijedeme a společně vymyslíme to nejlepší řešení.</p>
     </div>
     <div class="about-grid">
       <div class="about-card">
         <div class="card-icon">★</div>
-        <h3>Kvalita materiálu</h3>
-        <p>Pracujeme jen s prověřenými dodavateli. Žádné kompromisy.</p>
+        <h3>Kvalitní materiál</h3>
+        <p>Pracujeme jen s ověřenými materiály, které opravdu vydrží.</p>
       </div>
       <div class="about-card">
         <div class="card-icon">⚡</div>
-        <h3>Rychlé dodání</h3>
-        <p>Rozvoz zdarma po Opavě. Skladem máme tisíce položek.</p>
+        <h3>Vše skladem</h3>
+        <p>Většinu materiálu máme hned k odběru a po Opavě ho dovezeme zdarma.</p>
       </div>
       <div class="about-card">
         <div class="card-icon">✓</div>
         <h3>Odborná montáž</h3>
-        <p>Naši specialisté postaví plot rychle a precizně.</p>
+        <p>Plot vám kompletně postavíme, od základů až po předání.</p>
       </div>
       <div class="about-card">
         <div class="card-icon">♥</div>
-        <h3>Servis a záruka</h3>
-        <p>Záruka 2 roky na montáž. Vždy se k Vám rádi vrátíme.</p>
+        <h3>Záruka a servis</h3>
+        <p>Za svou prací si stojíme. Na montáž dáváme 2 roky záruku.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ PRODUCTS / CATEGORIES ============
-     IMAGE: kategorie obrázky se načítají z images.json → categories
-============================================================ -->
 <section id="products" class="section section-alt">
   <div class="container">
     <div class="section-header">
       <div class="eyebrow">Produkty</div>
-      <h2>Najděte si svůj plot</h2>
-      <p>6 hlavních kategorií. Pro online nákup klikněte na kategorii.</p>
+      <h2>Vyberte si svůj plot</h2>
+      <p>Projděte si naši nabídku nebo objednávejte rovnou v e-shopu.</p>
     </div>
     <div class="categories-grid" id="categoriesGrid">
-      <!-- Generováno z images.json a database.json přes script.js -->
-    </div>
+      </div>
   </div>
 </section>
 
-<!-- ============ GALLERY (REALIZACE) ============
-     IMAGE: galerie se načítá z images.json → gallery.items
-============================================================ -->
 <section id="gallery" class="section">
   <div class="container">
     <div class="section-header">
       <div class="eyebrow">Galerie</div>
       <h2>Naše realizace</h2>
-      <p>Ukázky dokončených projektů.</p>
+      <p>Ukázky plotů, které jsme nedávno postavili.</p>
     </div>
     <div class="gallery-grid" id="galleryGrid">
-      <!-- Generováno z images.json -->
-    </div>
+      </div>
   </div>
 </section>
 
-<!-- ============ SERVICES ============ -->
 <section id="services" class="section section-alt">
   <div class="container">
     <div class="section-header">
       <div class="eyebrow">Služby</div>
-      <h2>Co všechno umíme</h2>
+      <h2>Co nabízíme?</h2>
     </div>
     <div class="services-grid">
       <div class="service-item">
         <div class="service-num">01</div>
         <h3>Prodej materiálu</h3>
-        <p>Maloobchodní prodej veškerého materiálu na ploty.</p>
+        <p>Vše potřebné ke stavbě plotu najdete u nás nebo v e-shopu.</p>
       </div>
       <div class="service-item">
         <div class="service-num">02</div>
         <h3>Poradenství</h3>
-        <p>Vybereme s Vámi nejvhodnější plot pro Váš pozemek.</p>
+        <p>Pomůžeme vám vybrat ten správný plot a spočítáme materiál.</p>
       </div>
       <div class="service-item">
         <div class="service-num">03</div>
         <h3>Stavba na klíč</h3>
-        <p>Kompletní montáž od základů po finální nátěr.</p>
+        <p>Zajistíme kompletní stavbu. Od výkopu po natažení pletiva.</p>
       </div>
       <div class="service-item">
         <div class="service-num">04</div>
         <h3>Doprava zdarma</h3>
-        <p>Rozvoz zdarma po Opavě a okolí.</p>
+        <p>Po Opavě a okolí vám materiál dovezeme zcela zdarma.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ CONTACT ============ -->
 <section id="contact" class="section">
   <div class="container">
     <div class="section-header">
       <div class="eyebrow">Kontakt</div>
-      <h2>Spojte se s námi</h2>
-      <p>Zavolejte, napište nebo přijďte. Rádi Vám pomůžeme.</p>
+      <h2>Ozvěte se nám</h2>
+      <p>Zavolejte, napište, nebo se za námi zastavte osobně.</p>
     </div>
     <div class="contact-grid">
       <div class="contact-info">
@@ -236,7 +213,7 @@
           <div class="contact-icon">⏰</div>
           <div>
             <strong>Otevírací doba</strong>
-            <p>Po-Pá: 8:00-16:00<br>So-Ne: zavřeno</p>
+            <p>Po-Pá: 8:00 - 16:00<br>So-Ne: Zavřeno</p>
           </div>
         </div>
       </div>
@@ -257,7 +234,6 @@
   </div>
 </section>
 
-<!-- ============ FOOTER ============ -->
 <footer>
   <div class="container footer-inner">
     <div class="footer-col">
@@ -268,7 +244,7 @@
           <small>Ploty Opava</small>
         </span>
       </div>
-      <p>Profesionální ploty a oplocení. Rodinný podnik s tradicí v Opavě a okolí.</p>
+      <p>Poctivé ploty pro dům i zahradu. Vaše rodinná firma z Opavy.</p>
     </div>
     <div class="footer-col">
       <h4>Navigace</h4>
@@ -300,18 +276,17 @@
   </div>
 </footer>
 
-<!-- ============ INQUIRY MODAL ============ -->
 <div class="modal" id="inquiryModal">
   <div class="modal-content">
     <button class="modal-close" onclick="closeInquiryModal()">×</button>
-    <h2>Poptávka</h2>
+    <h2>Nezávazná poptávka</h2>
     <form onsubmit="submitInquiry(event)">
       <div class="form-row">
         <input type="text" name="name" placeholder="Jméno" required>
         <input type="tel" name="phone" placeholder="Telefon" required>
       </div>
       <input type="email" name="email" placeholder="E-mail" required>
-      <input type="text" name="address" placeholder="Adresa" required>
+      <input type="text" name="address" placeholder="Místo stavby (Adresa)" required>
       <div>
         <div class="inquiry-field-label">Typ plotu <span>(nepovinné)</span></div>
         <div class="fence-type-options">
@@ -323,9 +298,9 @@
           <label><input type="checkbox" name="fenceType" value="Příslušenství"><span>Příslušenství</span></label>
         </div>
       </div>
-      <textarea name="requirements" placeholder="Délka plotu, typ terénu, termín..." rows="4"></textarea>
+      <textarea name="requirements" placeholder="Délka plotu, terén, termín realizace..." rows="4"></textarea>
       <button type="submit" class="btn btn-primary btn-full">
-        Odeslat poptávku
+        Odeslat nezávaznou poptávku
         <svg class="arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </button>
     </form>
